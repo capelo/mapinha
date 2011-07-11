@@ -4,7 +4,6 @@ class CharactersController < ApplicationController
   def index
     @characters = Character.all
     @json = Character.all.to_gmaps4rails
-    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @characters }
@@ -26,7 +25,7 @@ class CharactersController < ApplicationController
   # GET /characters/new.xml
   def new
     @character = Character.new
-
+    @json = Character.all.to_gmaps4rails
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @character }
@@ -35,6 +34,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/1/edit
   def edit
+    @json = Character.all.to_gmaps4rails
     @character = Character.find(params[:id])
   end
 

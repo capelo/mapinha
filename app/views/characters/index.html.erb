@@ -1,10 +1,12 @@
+
 <h1>Listing characters</h1>
 
 <table>
   <tr>
     <th>Name</th>
+    <th>Tipo</th>
     <th>Address</th>
-    <th>Longtude</th>
+    <th>Longitude</th>
     <th>Latitude</th>
     <th>Gmaps</th>
     <th></th>
@@ -15,6 +17,7 @@
 <% @characters.each do |character| %>
   <tr>
     <td><%= character.name %></td>
+    <td><%= character.tipo %></td>
     <td><%= character.address %></td>
     <td><%= character.longitude %></td>
     <td><%= character.latitude %></td>
@@ -30,3 +33,29 @@
 
 <%= link_to 'New Character', new_character_path %>
 <%= gmaps4rails(@json) %>
+
+<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } } ) %> 
+<% content_for :scripts do %>
+<script type="text/javascript" charset="utf-8">
+
+Gmaps4Rails.HandleDragend = function(pos) {
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+      alert(responses[0].formatted_address);
+    } else {
+    alert('Cannot determine address at this location.');
+    }
+  });
+};
+
+Gmaps4Rails.callback = function() {
+  for (var i = 0; i <  this.markers.length; ++i) {
+     var currentMarker = Gmaps4Rails.markers[i].serviceObject;
+     google.maps.event.addListener(currentMarker, 'dragend', function() { Gmaps4Rails.HandleDragend(currentMarker.getPosition()) });
+  }
+};        
+</script>
+<% end %>

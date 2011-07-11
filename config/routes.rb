@@ -1,5 +1,9 @@
 Nomade::Application.routes.draw do
-  get "nomade/index"
+  resources :characters
+
+ root :to => "characters#index"
+
+  #get "nomade/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

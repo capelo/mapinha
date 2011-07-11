@@ -1,3 +1,5 @@
+<%= gmaps4rails(@json) %>
+
 <%= form_for(@character) do |f| %>
   <% if @character.errors.any? %>
     <div id="error_explanation">
@@ -14,6 +16,10 @@
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo %><br />
+    <%= f.text_field :tipo %>
   </div>
   <div class="field">
     <%= f.label :address %><br />
@@ -34,4 +40,31 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+
+
+<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } } ) %> 
+<% content_for :scripts do %>
+<script type="text/javascript" charset="utf-8">
+
+Gmaps4Rails.HandleDragend = function(pos) {
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+      alert(responses[0].formatted_address);
+    } else {
+    alert('Cannot determine address at this location.');
+    }
+  });
+};
+
+Gmaps4Rails.callback = function() {
+  for (var i = 0; i <  this.markers.length; ++i) {
+     var currentMarker = Gmaps4Rails.markers[i].serviceObject;
+     google.maps.event.addListener(currentMarker, 'dragend', function() { Gmaps4Rails.HandleDragend(currentMarker.getPosition()) });
+  }
+};        
+</script>
+<% end %>
 <% end %>
