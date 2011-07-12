@@ -34,7 +34,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/1/edit
   def edit
-    @json = Character.all.to_gmaps4rails
+    @json = Character.find(params[:id]).to_gmaps4rails
     @character = Character.find(params[:id])
   end
 
@@ -58,7 +58,7 @@ class CharactersController < ApplicationController
   # PUT /characters/1.xml
   def update
     @character = Character.find(params[:id])
-
+    @json = Character.find(params[:id]).to_gmaps4rails
     respond_to do |format|
       if @character.update_attributes(params[:character])
         format.html { redirect_to(@character, :notice => 'Character was successfully updated.') }
