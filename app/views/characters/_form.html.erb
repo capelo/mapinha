@@ -55,7 +55,9 @@ Gmaps4Rails.HandleDragend = function(pos) {
     latLng: pos
   }, function(responses) {
     if (responses && responses.length > 0) {
-      alert(responses[0].formatted_address);
+      //alert(responses[0].formatted_address);
+      oFormObject = document.forms[0];
+      oFormObject.elements["character[address]"].value = responses[0].formatted_address
     } else {
     alert('Cannot determine address at this location.');
     }
@@ -65,8 +67,28 @@ Gmaps4Rails.HandleDragend = function(pos) {
 Gmaps4Rails.callback = function() {
   for (var i = 0; i <  this.markers.length; ++i) {
      var currentMarker = Gmaps4Rails.markers[i].serviceObject;
+
      google.maps.event.addListener(currentMarker, 'dragend', function() { Gmaps4Rails.HandleDragend(currentMarker.getPosition()) });
   }
+  google.maps.event.addListener(Gmaps4Rails.map, 'click', function(object) {
+    
+    var position_clicked = object.latLng;
+    //alert('aqui..'+position_clicked);
+    Gmaps4Rails.HandleDragend(position_clicked);
+    //$('character_longitude').setValue('testetseste');
+    oFormObject = document.forms[0];
+
+    //oFormElement = oFormObject.elements["element_name"];
+
+
+    oFormObject.elements["character[address]"].value = object.formatted_address;
+
+   // oFormObject.elements["character[latitude]"].value = object.latLng;
+   // oFormObject.elements["character[longitude]"].value = object.latLng;
+
+  });
+
+
 };        
 
 
