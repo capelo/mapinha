@@ -32,9 +32,17 @@
 <br />
 
 <%= link_to 'New Character', new_character_path %>
-<%= gmaps4rails(@json) %>
 
-<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } } ) %> 
+
+
+
+<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } },"map_options" =>{"processing" => "json", "auto_adjust" => false, "auto_zoom" => false, "zoom" => 12, "center_latitude" => -23.6909241, "center_longitude" => -46.6571723 } ) %> 
+
+
+
+
+
+
 <% content_for :scripts do %>
 <script type="text/javascript" charset="utf-8">
 

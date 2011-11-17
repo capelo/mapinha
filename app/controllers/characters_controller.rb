@@ -29,6 +29,7 @@ class CharactersController < ApplicationController
     @character.tipo = 'default'
     @character.longitude = '-46.6571723'
     @character.latitude = '-23.6909241'
+
     #@json = Character.all.to_gmaps4rails
     @json = @character.to_gmaps4rails
     respond_to do |format|
