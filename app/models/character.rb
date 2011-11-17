@@ -7,11 +7,14 @@ class Character < ActiveRecord::Base
 
 	def gmaps4rails_infowindow
 		name
-        end
+    end
     
-        def gmaps4rails_title
+    def gmaps4rails_title
+
 		address
-        end
+    end
+	
+
 
 	def gmaps4rails_marker_picture
 	{
@@ -24,6 +27,6 @@ class Character < ActiveRecord::Base
 		#"shadow_width" => ,    # string, facultative
 		#"shadow_height" => ,   # string, facultative
 		#"shadow_anchor" => ,   # string, facultative
-        }
+    }
 	end
 end
