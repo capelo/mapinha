@@ -1,12 +1,15 @@
 
-<h1>New character</h1>
+<h1>New</h1>
 
-<%= gmaps4rails(@json) %>
+<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true}}, "map_options" => {"processing" => "json", "auto_adjust" => true, "auto_zoom" => false, "zoom" => 13  }) %>
+
 <%= render 'form2' %>
 
 <%= link_to 'Back', characters_path %>
 
-<%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } } ) %> 
+
+
+
 <% content_for :scripts do %>
 <script type="text/javascript" charset="utf-8">
 
@@ -48,6 +51,7 @@ Gmaps4Rails.callback = function() {
    // oFormObject.elements["character[longitude]"].value = object.latLng;
 
   });
+
 
 
 };        
