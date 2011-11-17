@@ -1,4 +1,9 @@
 class CharactersController < ApplicationController
+  
+  def filtra
+
+  end
+
   # GET /characters
   # GET /characters.xml
   def index
