@@ -1,14 +1,20 @@
 class CharactersController < ApplicationController
-  
-  def filtra
-
-  end
-
+ 
   # GET /characters
   # GET /characters.xml
   def index
+
     @characters = Character.all
-    @json = Character.all.to_gmaps4rails
+    
+    if params[:tipo]  
+      @characters = Character.where(:tipo =>(params[:tipo]))  
+    end  
+
+
+    @json = @characters.to_gmaps4rails
+
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @characters }

@@ -2,8 +2,6 @@ Nomade::Application.routes.draw do
 
 resources :characters
 
-match 'characters/filtra' => 'characters#filtra'
-
 
 root :to => "characters#index"
 
