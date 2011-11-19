@@ -19,7 +19,7 @@
   </div>
   <div class="field">
     <%= f.label :tipo %><br />
-    <%= f.text_field :tipo %>
+    <%= select_tag "character[tipo]", options_for_select([["vende", "vende"], ["aluga", "aluga"]]), {:multiple => false} %>
   </div>
   <div class="field">
     <%= f.label :address %><br />
