@@ -1,0 +1,69 @@
+
+<h1>Listing characters</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Tipo</th>
+    <th>Address</th>
+    <th>Longitude</th>
+    <th>Latitude</th>
+    <th>Gmaps</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+
+<% @characters.each do |character| %>
+  <tr>
+    <td><%= character.name %></td>
+    <td><%= character.tipo %></td>
+    <td><%= character.address %></td>
+    <td><%= character.longitude %></td>
+    <td><%= character.latitude %></td>
+    <td><%= character.gmaps %></td>
+    <td><%= link_to 'Show', character %></td>
+    <td><%= link_to 'Edit', edit_character_path(character) %></td>
+    <td><%= link_to 'Destroy', character, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Alugar', characters_path(:tipo => "aluga") %>
+<%= link_to 'Vender', characters_path(:tipo => "vende") %>
+
+
+
+   <%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } },"map_options" =>{"processing" => "json", "auto_adjust" => false, "auto_zoom" => false, "zoom" => 12, "center_latitude" => -23.6909241, "center_longitude" => -46.6571723 } ) %> 
+
+
+
+
+<% content_for :scripts do %>
+<script type="text/javascript" charset="utf-8">
+
+Gmaps4Rails.HandleDragend = function(pos) {
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+      alert(responses[0].formatted_address);
+    } else {
+    alert('Cannot determine address at this location.');
+    }
+  });
+};
+
+Gmaps4Rails.callback = function() {
+  for (var i = 0; i <  this.markers.length; ++i) {
+     var currentMarker = Gmaps4Rails.markers[i].serviceObject;
+     google.maps.event.addListener(currentMarker, 'dragend', function() { Gmaps4Rails.HandleDragend(currentMarker.getPosition()) });
+  }
+};        
+</script>
+<% end %>
+<%= link_to 'New Character', new_character_path %>
