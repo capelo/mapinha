@@ -64,7 +64,8 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to(@character, :notice => 'Character was successfully created.') }
+        format.html { redirect_to(characters_url) }
+        #format.html { redirect_to(@character, :notice => 'Character was successfully created.') }
         format.xml  { render :xml => @character, :status => :created, :location => @character }
       else
         format.html { render :action => "new" }

@@ -31,12 +31,17 @@
 
 <br />
 
+<!--
 <%= link_to 'Tudo', characters_path %>
 <%= link_to 'Alugar', characters_path(:tipo => "aluga") %>
 <%= link_to 'Vender', characters_path(:tipo => "vende") %>
+ -->
 
-
-
+<button id="replaceMarkersVenda">Vender</button>
+<button id="replaceMarkersAluga">Alugar</button>
+<button id="replaceMarkers">Tudo</button>
+<br>
+<%= link_to 'Adicionar Nova Placa', new_character_path %>
 <%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } },"map_options" =>{"processing" => "json", "auto_adjust" => false, "auto_zoom" => false, "zoom" => 12, "center_latitude" => -23.6909241, "center_longitude" => -46.6571723 } ) %> 
 
 
@@ -49,6 +54,20 @@ $(function(){
       Gmaps4Rails.replaceMarkers(data);
     });
   });
+
+  $("#replaceMarkersAluga").click(function(){
+    $.getJSON("/characters.json", {tipo: "aluga"}, function(data){
+      Gmaps4Rails.replaceMarkers(data);
+    });
+  });
+
+  $("#replaceMarkersVenda").click(function(){
+    $.getJSON("/characters.json", {tipo: "vende"}, function(data){
+      Gmaps4Rails.replaceMarkers(data);
+    });
+  });
+
+
 });
 
 
@@ -74,6 +93,5 @@ Gmaps4Rails.callback = function() {
 };        
 </script>
 <% end %>
-<%= link_to 'New Character', new_character_path %>
 
-<button id="replaceMarkers">atualizar</button>
+
