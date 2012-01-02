@@ -1,5 +1,7 @@
 class CharactersController < ApplicationController
  
+  respond_to :json, :html
+
   # GET /characters
   # GET /characters.xml
   def index
@@ -13,12 +15,12 @@ class CharactersController < ApplicationController
 
     @json = @characters.to_gmaps4rails
 
+    respond_with @json
 
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @characters }
-    end
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.xml  { render :xml => @characters }
+    #end
   end
 
   # GET /characters/1
